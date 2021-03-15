@@ -1,0 +1,53 @@
+.page-layout{
+    /*
+        page wrapper must fill the entire document
+    */
+    --page-height: 100vh;
+    --page-width: 100vw;
+    height: var(--page-height);
+    width: var(--page-width);
+    border: 2px dotted;
+    /*
+        just some colors for page layout different part
+    */
+    --color-bg-command: rgba(64,64,196,1);
+    --color-bg-utils: rgba(0,196,128,1);
+    --color-bg-footer: rgba(255,128,64,1);
+    /*
+        size for command panel and base size for utils panel and footer
+    */
+    --aside-size: 80px;
+    /*
+        use grid method for laying out
+    */
+    display: grid;
+
+}
+.page-layout-vertical{
+    grid-template-areas:"cmd . utl"
+                      "cmd . utl"
+                      "ftr ftr ftr";
+    grid-template-columns: var(--aside-size) auto var(--aside-size);
+    grid-template-rows: auto calc(var(--aside-size)/4);/*PROBLEM: there's no respect of the second row size whether you use fr or auto for the first one*/
+    grid-auto-rows: calc(var(--aside-size)/4);/*SOLUTION: enforces the last row, the footer to get the wished height*/
+}
+.page-layout-horizontal{
+    grid-template-areas:"cmd"
+                      "."
+                      "utl"
+                      "ftr";
+    grid-template-rows: var(--aside-size) auto calc(var(--aside-size)/4 * 3) calc(var(--aside-size)/4);
+    /*NOTE: the summon of the last two rows make min-size in total*/
+}
+.page-layout > .command-panel{
+    background-color: var(--color-bg-command);
+    grid-area: cmd;
+}
+.page-layout > .utils-panel{
+    background-color: var(--color-bg-utils);
+    grid-area: utl;
+}
+.page-layout > .footer{
+    background-color: var(--color-bg-footer);
+    grid-area: ftr;
+}
